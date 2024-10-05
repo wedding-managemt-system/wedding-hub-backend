@@ -1,6 +1,5 @@
 package org.example.inventory.service;
 
-
 import jakarta.transaction.Transactional;
 import org.example.inventory.common.InventoryErrorResponse;
 import org.example.inventory.common.InventoryResponse;
@@ -10,13 +9,13 @@ import org.example.inventory.repo.InventoryRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+//import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @Transactional
 
 public class InventoryService {
-    private final WebClient webClient;
+//    private final WebClient webClient;
 
     @Autowired
     private InventoryRepo inventoryRepo;
@@ -24,11 +23,11 @@ public class InventoryService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public InventoryService(WebClient webClient , InventoryRepo inventoryRepo , ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-        this.webClient = webClient;
-        this.inventoryRepo = inventoryRepo;
-    }
+//    public InventoryService(WebClient webClient , InventoryRepo inventoryRepo , ModelMapper modelMapper) {
+//        this.modelMapper = modelMapper;
+//        this.webClient = webClient;
+//        this.inventoryRepo = inventoryRepo;
+//    }
 
     public InventoryResponse createNewInventory(InventoryModel inventoryModel) {
         System.out.println(inventoryModel);

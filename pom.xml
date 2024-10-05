@@ -10,10 +10,12 @@
   </parent>
 
   <modules>
-<!--    <module>ItemInventory</module>-->
-<!--    <module>Inventory</module>-->
-<!--    <module>Order</module>-->
+
     <module>Authentication</module>
+    <module> Order </module>
+    <module> Inventory </module>
+    <module> Product </module>
+
   </modules>
 
 
