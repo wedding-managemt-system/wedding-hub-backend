@@ -45,27 +45,29 @@ public clientOrder (WebClient InventoryWebClient, WebClient productWebClient , M
 
           if (itemId != null && !itemId.isEmpty()) {
               InventoryDTO inventoryResponse  = InventoryWebClient.get()
-                      .uri(uriBuilder -> uriBuilder.path("/inventory/getInventory/{itemId}").build(itemId))
+                      .uri(uriBuilder -> uriBuilder.path("/getInventory/{itemId}").build(itemId))
                       .retrieve()
                       .bodyToMono(InventoryDTO.class)
                       .block();  // Block to get the response synchronously
 
               System.out.println(inventoryResponse);
 
+              String quantity = inventoryResponse.getQuantity();
+
+              if(quantity != null && !quantity.isEmpty()){
+                  clientOrderRepo.save(modelMapper.map(clientOrder , clientOrderModel.class));
+              }
+
           } else {
               System.out.println("Invalid itemId: " + itemId);
           }
 
 
-
-//         clientOrderRepo.save(modelMapper.map(clientOrder , clientOrderModel.class));
-
-         return new orderSuccessResponse(clientOrder , "Order Successfully Added");
+          return new orderSuccessResponse(clientOrder , "Order Successfully Added");
 
 
       }catch(Exception e){
-//          System.out.println(e.getMessage());
-          return new orderErrorResponse("Have an error while creating Order");
+          return new orderErrorResponse(e.getMessage());
       }
   }
 

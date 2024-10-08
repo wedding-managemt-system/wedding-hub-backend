@@ -18,9 +18,11 @@ public class InventoryApplication {
         return new ModelMapper();
     }
 
-//    @Bean
-//    public WebClient webClient() {
-//        return WebClient.builder().build();
-//    }
+    @Bean
+    public WebClient InventoryWebClient() {
+        return WebClient.builder()
+                .baseUrl("http://localhost:8080/api/v1")  // Update the base URL to the correct service and port
+                .build();
+    }
 
 }
