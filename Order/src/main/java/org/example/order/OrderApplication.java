@@ -21,7 +21,14 @@ public class OrderApplication {
     @Bean
     public WebClient InventoryWebClient() {
         return WebClient.builder()
-                .baseUrl("http://localhost:8080/api/v1")  // Update the base URL to the correct service and port
+                .baseUrl("http://localhost:8085/api/v1")  // Update the base URL to the correct service and port
+                .build();
+    }
+
+    @Bean
+    public WebClient productWebClient() {
+        return WebClient.builder()
+                .baseUrl("http://localhost:8083/api/v1")  // Update the base URL to the correct service and port
                 .build();
     }
 

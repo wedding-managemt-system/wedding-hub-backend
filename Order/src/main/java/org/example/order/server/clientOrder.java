@@ -2,6 +2,7 @@ package org.example.order.server;
 
 import jakarta.transaction.Transactional;
 import org.example.inventory.dto.InventoryDTO;
+import org.example.product.dto.productDTO;
 import org.example.order.common.orderErrorResponse;
 import org.example.order.common.orderSuccessResponse;
 import org.example.order.model.clientOrderModel;
@@ -44,6 +45,8 @@ public clientOrder (WebClient InventoryWebClient, WebClient productWebClient , M
           System.out.println(itemId);
 
           if (itemId != null && !itemId.isEmpty()) {
+
+//              communicate with inventory table
               InventoryDTO inventoryResponse  = InventoryWebClient.get()
                       .uri(uriBuilder -> uriBuilder.path("/getInventory/{itemId}").build(itemId))
                       .retrieve()
@@ -53,18 +56,29 @@ public clientOrder (WebClient InventoryWebClient, WebClient productWebClient , M
               System.out.println(inventoryResponse);
 
               String quantity = inventoryResponse.getQuantity();
+              Integer itemQuantity = Integer.parseInt(quantity);
 
-              if(quantity != null && !quantity.isEmpty()){
+//              communicate with product Table
+//              productDTO productResponse = productWebClient.get()
+//                      .uri(uriBuilder -> uriBuilder.path(""))
+
+
+              System.out.println(quantity);
+
+
+              if(itemQuantity > 0){
                   clientOrderRepo.save(modelMapper.map(clientOrder , clientOrderModel.class));
+                  return new orderSuccessResponse(clientOrder , "Order Successfully Added");
+
+              }else{
+                  return new orderErrorResponse("Item Haven't enough stock");
               }
 
           } else {
               System.out.println("Invalid itemId: " + itemId);
           }
 
-
-          return new orderSuccessResponse(clientOrder , "Order Successfully Added");
-
+          return null;
 
       }catch(Exception e){
           return new orderErrorResponse(e.getMessage());
