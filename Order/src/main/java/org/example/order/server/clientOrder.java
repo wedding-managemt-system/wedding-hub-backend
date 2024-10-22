@@ -2,6 +2,7 @@ package org.example.order.server;
 
 import jakarta.transaction.Transactional;
 import org.example.inventory.dto.InventoryDTO;
+//import org.example.product.dto.productDTO;
 import org.example.product.dto.productDTO;
 import org.example.order.common.orderErrorResponse;
 import org.example.order.common.orderSuccessResponse;
@@ -53,25 +54,33 @@ public clientOrder (WebClient InventoryWebClient, WebClient productWebClient , M
                       .bodyToMono(InventoryDTO.class)
                       .block();  // Block to get the response synchronously
 
-              System.out.println(inventoryResponse);
+              System.out.println(inventoryResponse.getProductId());
 
               String quantity = inventoryResponse.getQuantity();
               Integer itemQuantity = Integer.parseInt(quantity);
-
-//              communicate with product Table
-//              productDTO productResponse = productWebClient.get()
-//                      .uri(uriBuilder -> uriBuilder.path(""))
-
+              Integer productId = Integer.parseInt(inventoryResponse.getProductId());
 
               System.out.println(quantity);
 
+//              communicate with product Table
+             productDTO productDTO = productWebClient.get()
+                     .uri(uriBuilder -> uriBuilder.path("/product/getProduct/{productId}").build(productId))
+                     .retrieve()
+                     .bodyToMono(productDTO.class)
+                     .block();
 
-              if(itemQuantity > 0){
-                  clientOrderRepo.save(modelMapper.map(clientOrder , clientOrderModel.class));
-                  return new orderSuccessResponse(clientOrder , "Order Successfully Added");
+              System.out.println(productDTO);
 
+              if(productDTO.isForSale()){
+                  if(itemQuantity > 0){
+                      clientOrderRepo.save(modelMapper.map(clientOrder , clientOrderModel.class));
+                      return new orderSuccessResponse(clientOrder , "Order Successfully Added");
+
+                  }else{
+                      return new orderErrorResponse("Item Haven't enough stock");
+                  }
               }else{
-                  return new orderErrorResponse("Item Haven't enough stock");
+                  return new orderErrorResponse("Item does not have for sale");
               }
 
           } else {
