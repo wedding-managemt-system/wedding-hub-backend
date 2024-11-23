@@ -12,11 +12,15 @@
         <option value="$PROJECT_DIR$/ItemInventory/pom.xml" />
         <option value="$PROJECT_DIR$/clientOrder/pom.xml" />
         <option value="$PROJECT_DIR$/Authentication/pom.xml" />
+        <option value="$PROJECT_DIR$/base/src/pom.xml" />
+        <option value="$PROJECT_DIR$/base/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/ItemInventory/pom.xml" />
+        <option value="$PROJECT_DIR$/base/src/pom.xml" />
+        <option value="$PROJECT_DIR$/baseFile/pom.xml" />
         <option value="$PROJECT_DIR$/clientOrder/pom.xml" />
         <option value="$PROJECT_DIR$/product/pom.xml" />
       </set>

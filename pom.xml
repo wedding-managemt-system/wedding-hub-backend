@@ -25,6 +25,7 @@
     <module>Order</module>
     <module>Inventory</module>
     <module>Product</module>
+    <module>base</module>
   </modules>
 
   <build>
